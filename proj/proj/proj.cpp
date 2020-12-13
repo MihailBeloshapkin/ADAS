@@ -16,86 +16,24 @@ Point point2;
 
 Speed video_speed;
 
-void CallBackFunction(int event, int x, int y, int flags, void *userdata)
+void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 {
-	switch (event)
-	{
-	case EVENT_LBUTTONDOWN:
-		cout << "Left button pressed on position:" << x <<  " " << y << endl;
-		point1 = point2;
-		point2 = Point(x, y);
-		break;
-	case EVENT_RBUTTONDOWN:
-		video_speed.changeSpeed();
-	default:
-		break;
-	}
+    switch (event)
+    {
+    case EVENT_LBUTTONDOWN:
+        cout << "Left button pressed on position:" << x << " " << y << endl;
+        point1 = point2;
+        point2 = Point(x, y);
+        break;
+    case EVENT_RBUTTONDOWN:
+        video_speed.changeSpeed();
+    default:
+        break;
+    }
 }
 
-int main(int argc, char** argv)
+void opticalFlow(VideoCapture capture)
 {
-	/*
-	VideoCapture capture("IMG_8168.avi");
-	if (!capture.isOpened())
-	{
-		throw "Unable to open source file";
-	}
-	namedWindow("Video", 1);
-
-	setMouseCallback("Video", CallBackFunction, NULL);
-
-	while (true)
-	{
-		Mat frame;
-		capture >> frame;
-
-		if (frame.empty())
-		{
-			break;
-		}
-		line(frame, point1, point2, Scalar(0.5, 0.7, 0.3), 2, LINE_8);
-		imshow("Video", frame);
-
-		int key = waitKey(video_speed.getSpeed());
-		if (key == 27)
-		{
-			break;
-		}
-
-	}
-
-	capture.release();
-
-	return 0;
-	*/
-
-
-    const string about =
-        "This sample demonstrates Lucas-Kanade Optical Flow calculation.\n"
-        "The example file can be downloaded from:\n"
-        "  https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4";
-    const string keys =
-        "{ h help |      | print this help message }"
-        "{ @image | vtest.avi | path to image file }";
-    CommandLineParser parser(argc, argv, keys);
-    parser.about(about);
-    if (parser.has("help"))
-    {
-        parser.printMessage();
-        return 0;
-    }
-    if (!parser.check())
-    {
-        parser.printErrors();
-        return 0;
-    }
-    VideoCapture capture("IMG_8168.avi");
-    if (!capture.isOpened()) {
-        //error in opening the video input
-        cerr << "Unable to open file!" << endl;
-        return 0;
-    }
-    // Create some random colors
     vector<Scalar> colors;
     RNG rng;
     for (int i = 0; i < 100; i++)
@@ -105,21 +43,35 @@ int main(int argc, char** argv)
         int b = rng.uniform(0, 256);
         colors.push_back(Scalar(r, g, b));
     }
+
     Mat old_frame, old_gray;
     vector<Point2f> p0, p1;
     // Take first frame and find corners in it
     capture >> old_frame;
+    old_frame = old_frame(cv::Range(old_frame.rows / 2, old_frame.rows), cv::Range(0, old_frame.cols));
     cvtColor(old_frame, old_gray, COLOR_BGR2GRAY);
     goodFeaturesToTrack(old_gray, p0, 100, 0.3, 7, Mat(), 7, false, 0.04);
     // Create a mask image for drawing purposes
     Mat mask = Mat::zeros(old_frame.size(), old_frame.type());
-    while (true) 
+    while (true)
     {
         Mat frame, frame_gray;
-        capture >> frame;
+
+        for (int iter = 0; iter < video_speed.getSpeed(); iter++)
+        {
+            capture >> frame;
+        }
+
+        Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
         if (frame.empty())
+        {
             break;
-        cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
+        }
+
+        cvtColor(subFrame, frame_gray, COLOR_BGR2GRAY);
+        imshow("Gray", frame_gray);
+
+
         // calculate optical flow
         vector<uchar> status;
         vector<float> err;
@@ -129,7 +81,8 @@ int main(int argc, char** argv)
         for (uint i = 0; i < p0.size(); i++)
         {
             // Select good points
-            if (status[i] == 1) {
+            if (status[i] == 1)
+            {
                 good_new.push_back(p1[i]);
                 // draw the tracks
                 line(mask, p1[i], p0[i], colors[i], 2);
@@ -137,7 +90,7 @@ int main(int argc, char** argv)
             }
         }
         Mat img;
-        add(frame, mask, img);
+        add(subFrame, mask, img);
         imshow("Frame", img);
         int keyboard = waitKey(30);
         if (keyboard == 'q' || keyboard == 27)
@@ -146,4 +99,98 @@ int main(int argc, char** argv)
         old_gray = frame_gray.clone();
         p0 = good_new;
     }
+}
+
+
+Mat src, src_gray;
+Mat dst, detected_edges;
+
+int lowThreshold = 0;
+const int max_lowThreshold = 100;
+const int ratio = 3;
+const int kernel_size = 3;
+const char* window_name = "Edge Map";
+
+static void CannyThreshold(int, void*)
+{
+    blur(src_gray, detected_edges, Size(3, 3));
+    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
+    dst = Scalar::all(0);
+    src.copyTo(dst, detected_edges);
+    imshow(window_name, dst);
+}
+
+int main(int argc, char** argv)
+{
+    /*
+    VideoCapture capture("C:\\Users\\france\\source\\repos\\MyProject\\videos\\example.avi");
+    if (!capture.isOpened())
+    {
+        throw "Unable to open source file";
+    }
+    namedWindow("Video", 1);
+
+    setMouseCallback("Video", CallBackFunction, NULL);
+
+    Mat frame;
+    capture >> frame;
+    imshow("Video", frame);
+    waitKey(1000);
+    while (true)
+    {
+        Mat frame;
+        capture >> frame;
+
+        if (frame.empty())
+        {
+            break;
+        }
+        line(frame, point1, point2, Scalar(0.5, 0.7, 0.3), 2, LINE_8);
+        imshow("Video", frame);
+
+        int key = waitKey(video_speed.getSpeed());
+        if (key == 27)
+        {
+            break;
+        }
+
+    }
+
+    capture.release();
+    return 0;
+    */
+
+
+    VideoCapture capture("C:\\Users\\france\\source\\repos\\MyProject\\videos\\example.avi");
+    if (!capture.isOpened()) {
+        //error in opening the video input
+        cerr << "Unable to open file!" << endl;
+        return 0;
+    }
+
+ //   namedWindow("Frame", 1);
+    setMouseCallback("Frame", CallBackFunction, NULL);
+
+    Mat frame;
+    capture >> frame;
+
+    Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
+    Mat gray;
+
+    cvtColor(subFrame, gray, COLOR_BGR2GRAY);
+    imshow("gray", gray);
+    waitKey(10000);
+
+
+    GaussianBlur(gray, detected_edges, Size(3, 3), 0);
+
+    imshow("Blur", detected_edges);
+    waitKey(10000);
+
+    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
+    dst = Scalar::all(0);
+    imshow("Canny", detected_edges);
+
+    waitKey(10000);
+    return 1;
 }
