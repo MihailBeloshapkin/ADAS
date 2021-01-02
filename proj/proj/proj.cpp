@@ -14,7 +14,7 @@ using namespace std;
 Point point1;
 Point point2;
 
-Speed video_speed;
+//Speed video_speed;
 
 void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 {
@@ -26,7 +26,7 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
         point2 = Point(x, y);
         break;
     case EVENT_RBUTTONDOWN:
-        video_speed.changeSpeed();
+  //      video_speed.changeSpeed();
     default:
         break;
     }
@@ -57,10 +57,10 @@ void opticalFlow(VideoCapture capture)
     {
         Mat frame, frame_gray;
 
-        for (int iter = 0; iter < video_speed.getSpeed(); iter++)
-        {
-            capture >> frame;
-        }
+//        for (int iter = 0; iter < video_speed.getSpeed(); iter++)
+//        {
+ //           capture >> frame;
+ //       }
 
         Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
         if (frame.empty())
@@ -102,15 +102,13 @@ void opticalFlow(VideoCapture capture)
 }
 
 
-Mat src, src_gray;
-Mat dst, detected_edges;
-
 int lowThreshold = 0;
 const int max_lowThreshold = 100;
 const int ratio = 3;
 const int kernel_size = 3;
 const char* window_name = "Edge Map";
 
+/*
 static void CannyThreshold(int, void*)
 {
     blur(src_gray, detected_edges, Size(3, 3));
@@ -118,6 +116,37 @@ static void CannyThreshold(int, void*)
     dst = Scalar::all(0);
     src.copyTo(dst, detected_edges);
     imshow(window_name, dst);
+}
+*/
+
+class cannyAlg {
+private:
+    int lowThreshold = 0;
+    int nkernelSize = 0;
+    
+public:
+    void cannyAlgorithm(Mat frame, Mat detected_edges)
+    {
+        Mat gray;
+
+        cvtColor(frame, gray, COLOR_BGR2GRAY);
+        imshow("gray", gray);
+        GaussianBlur(gray, detected_edges, Size(5, 5), 0);
+        Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
+        imshow("canny", detected_edges);
+    }
+
+};
+
+void cannyAlgorithm(Mat frame, Mat detected_edges)
+{
+    Mat gray;
+
+    cvtColor(frame, gray, COLOR_BGR2GRAY);
+    imshow("gray", gray);
+    GaussianBlur(gray, detected_edges, Size(5, 5), 0);
+    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
+    imshow("canny", detected_edges);
 }
 
 int main(int argc, char** argv)
@@ -176,21 +205,43 @@ int main(int argc, char** argv)
 
     Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
     Mat gray;
+    Mat bw;
 
-    cvtColor(subFrame, gray, COLOR_BGR2GRAY);
-    imshow("gray", gray);
+    cvtColor(subFrame, bw, COLOR_BGR2GRAY);
+    threshold(bw, bw, 40, 255, THRESH_BINARY | THRESH_OTSU);
+    Mat dist;
+
+    distanceTransform(bw, dist, DIST_L2, 3);
+
+    normalize(dist, dist, 0, 1.0, NORM_MINMAX);
+    threshold(dist, dist, 0.5, 1.0, THRESH_BINARY);
+
+    Mat kernel1 = Mat::ones(3, 3, CV_8U);
+    dilate(dist, dist, kernel1);
+    
+    Mat dist_8u;
+    dist.convertTo(dist_8u, CV_8U);
+
+    vector<vector<Point>> contours;
+    findContours(dist_8u, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+    Mat markers = Mat::zeros(dist.size(), CV_32S);
+
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        drawContours(markers, contours, static_cast<int>(i), Scalar(static_cast<int>(i) + 1), -1);
+    }
+
+    imshow("contours", markers);
+
+    imshow("dilate", dist);
+    imshow("frame", subFrame);
+    imshow("bin", bw);
     waitKey(10000);
+    cannyAlgorithm(subFrame, subFrame);
 
-
-    GaussianBlur(gray, detected_edges, Size(3, 3), 0);
-
-    imshow("Blur", detected_edges);
-    waitKey(10000);
-
-    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
-    dst = Scalar::all(0);
-    imshow("Canny", detected_edges);
-
+    
     waitKey(10000);
     return 1;
 }
+
