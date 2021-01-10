@@ -153,10 +153,12 @@
     <ClCompile Include="canny_alg.cpp" />
     <ClCompile Include="optical_flow.cpp" />
     <ClCompile Include="proj.cpp" />
+    <ClCompile Include="watershed_algorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="canny_alg.h" />
     <ClInclude Include="optical_flow.h" />
+    <ClInclude Include="watershed_algorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

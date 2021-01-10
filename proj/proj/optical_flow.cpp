@@ -12,6 +12,8 @@ using namespace std;
 
 namespace MyProject
 {
+    
+
 	void optical_flow::optical_flow_alg(VideoCapture capture)
 	{
         vector<Scalar> colors;
@@ -23,26 +25,25 @@ namespace MyProject
             int b = rng.uniform(0, 256);
             colors.push_back(Scalar(r, g, b));
         }
+        vector<cv::Point2f> p0;
+        vector<cv::Point2f> p1;
 
         Mat old_frame, old_gray;
-        vector<Point2f> p0, p1;
         // Take first frame and find corners in it
         capture >> old_frame;
-        old_frame = old_frame(cv::Range(old_frame.rows / 2, old_frame.rows), cv::Range(0, old_frame.cols));
+    //    old_frame = old_frame(cv::Range(old_frame.rows / 2, old_frame.rows), cv::Range(0, old_frame.cols));
         cvtColor(old_frame, old_gray, COLOR_BGR2GRAY);
         goodFeaturesToTrack(old_gray, p0, 100, 0.3, 7, Mat(), 7, false, 0.04);
+        p0.push_back(Point2f(509, 412));
         // Create a mask image for drawing purposes
         Mat mask = Mat::zeros(old_frame.size(), old_frame.type());
         while (true)
         {
             Mat frame, frame_gray;
 
-            //        for (int iter = 0; iter < video_speed.getSpeed(); iter++)
-            //        {
-             //           capture >> frame;
-             //       }
+            capture >> frame;
 
-            Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
+            Mat subFrame = frame; /*(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols))*/
             if (frame.empty())
             {
                 break;
