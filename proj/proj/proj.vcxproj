@@ -150,7 +150,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="canny_alg.cpp" />
     <ClCompile Include="proj.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="canny_alg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

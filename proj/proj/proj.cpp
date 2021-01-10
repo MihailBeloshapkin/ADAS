@@ -4,12 +4,13 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
-
 #include <iostream>
 #include "Speed.h"
+#include "canny_alg.h"
 
 using namespace cv;
 using namespace std;
+using namespace MyProject;
 
 Point point1;
 Point point2;
@@ -101,53 +102,16 @@ void opticalFlow(VideoCapture capture)
     }
 }
 
-
-int lowThreshold = 0;
-const int max_lowThreshold = 100;
-const int ratio = 3;
-const int kernel_size = 3;
 const char* window_name = "Edge Map";
 
-/*
-static void CannyThreshold(int, void*)
+class foo
 {
-    blur(src_gray, detected_edges, Size(3, 3));
-    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
-    dst = Scalar::all(0);
-    src.copyTo(dst, detected_edges);
-    imshow(window_name, dst);
-}
-*/
-
-class cannyAlg {
-private:
-    int lowThreshold = 0;
-    int nkernelSize = 0;
-    
 public:
-    void cannyAlgorithm(Mat frame, Mat detected_edges)
+    void example()
     {
-        Mat gray;
 
-        cvtColor(frame, gray, COLOR_BGR2GRAY);
-        imshow("gray", gray);
-        GaussianBlur(gray, detected_edges, Size(5, 5), 0);
-        Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
-        imshow("canny", detected_edges);
     }
-
 };
-
-void cannyAlgorithm(Mat frame, Mat detected_edges)
-{
-    Mat gray;
-
-    cvtColor(frame, gray, COLOR_BGR2GRAY);
-    imshow("gray", gray);
-    GaussianBlur(gray, detected_edges, Size(5, 5), 0);
-    Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
-    imshow("canny", detected_edges);
-}
 
 int main(int argc, char** argv)
 {
@@ -190,9 +154,8 @@ int main(int argc, char** argv)
     */
 
 
-    VideoCapture capture("C:\\Users\\france\\source\\repos\\MyProject\\videos\\example.avi");
+    VideoCapture capture("C:\\Users\\france\\source\\MyProject\\videos\\example_2.avi");
     if (!capture.isOpened()) {
-        //error in opening the video input
         cerr << "Unable to open file!" << endl;
         return 0;
     }
@@ -232,15 +195,15 @@ int main(int argc, char** argv)
         drawContours(markers, contours, static_cast<int>(i), Scalar(static_cast<int>(i) + 1), -1);
     }
 
-    imshow("contours", markers);
+ //   imshow("contours", markers);
 
     imshow("dilate", dist);
     imshow("frame", subFrame);
     imshow("bin", bw);
-    waitKey(10000);
-    cannyAlgorithm(subFrame, subFrame);
-
+ //   waitKey(10000);
     
+    canny_alg canny;
+    canny.canny_algorithm(subFrame, subFrame);
     waitKey(10000);
     return 1;
 }
