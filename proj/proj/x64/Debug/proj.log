@@ -1,3 +1,15 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(475,5): warning MSB8029: Промежуточный каталог или каталог выхода не может располагаться во временном каталоге, потому что это может стать причиной проблем с добавочной сборкой.
   optical_flow.cpp
+  proj.cpp
+C:\Users\france\source\MyProject\proj\proj\proj.cpp(31,28): warning C4244: аргумент: преобразование "int" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\france\source\MyProject\proj\proj\proj.cpp(31,25): warning C4244: аргумент: преобразование "int" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=float
+          ]
+  Создание кода...
   proj.vcxproj -> C:\Users\france\source\MyProject\proj\x64\Debug\proj.exe

@@ -12,7 +12,15 @@ using namespace std;
 
 namespace MyProject
 {
-    
+
+    vector<Point2f> optical_flow::p0;
+    vector<Point2f> optical_flow::p1;
+    vector<Point2f> optical_flow::added;
+
+    void optical_flow::add_point(Point2f new_point)
+    {
+        added.push_back(new_point);
+    }
 
 	void optical_flow::optical_flow_alg(VideoCapture capture)
 	{
@@ -25,16 +33,16 @@ namespace MyProject
             int b = rng.uniform(0, 256);
             colors.push_back(Scalar(r, g, b));
         }
-        vector<cv::Point2f> p0;
-        vector<cv::Point2f> p1;
-
+        
         Mat old_frame, old_gray;
-        // Take first frame and find corners in it
+        
         capture >> old_frame;
     //    old_frame = old_frame(cv::Range(old_frame.rows / 2, old_frame.rows), cv::Range(0, old_frame.cols));
         cvtColor(old_frame, old_gray, COLOR_BGR2GRAY);
-        goodFeaturesToTrack(old_gray, p0, 100, 0.3, 7, Mat(), 7, false, 0.04);
-        p0.push_back(Point2f(509, 412));
+    //    goodFeaturesToTrack(old_gray, p0, 100, 0.3, 7, Mat(), 7, false, 0.04);
+        
+        p0.insert(p0.end(), added.begin(), added.end());
+     //   p0 = added;
         // Create a mask image for drawing purposes
         Mat mask = Mat::zeros(old_frame.size(), old_frame.type());
         while (true)
@@ -53,7 +61,6 @@ namespace MyProject
             imshow("Gray", frame_gray);
 
 
-            // calculate optical flow
             vector<uchar> status;
             vector<float> err;
             TermCriteria criteria = TermCriteria((TermCriteria::COUNT) + (TermCriteria::EPS), 10, 0.03);

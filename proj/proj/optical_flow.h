@@ -7,15 +7,20 @@
 #include <opencv2/video.hpp>
 
 using namespace cv;
+using namespace std;
 
 namespace MyProject
 {
 	class optical_flow
 	{
-//	private:
-	//	static vector<cv::Point2f> p0;
-	//	static vector<cv::Point2f> p1;
+	private:
+		static vector<Point2f> p0;
+		static vector<Point2f> p1;
+		static vector<Point2f> added;
 	public:
+		static void add_point(Point2f new_point);
+
+		// Calculate optical flow according the input vector of points.
 		static void optical_flow_alg(cv::VideoCapture capture);
 	};
 
