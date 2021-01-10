@@ -151,10 +151,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="canny_alg.cpp" />
+    <ClCompile Include="optical_flow.cpp" />
     <ClCompile Include="proj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="canny_alg.h" />
+    <ClInclude Include="optical_flow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

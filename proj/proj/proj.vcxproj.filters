@@ -21,9 +21,15 @@
     <ClCompile Include="canny_alg.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="optical_flow.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="canny_alg.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="optical_flow.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
