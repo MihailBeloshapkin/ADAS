@@ -41,39 +41,7 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 
 
 int main(int argc, char** argv)
-{
-    /*
-    VideoCapture capture_0("C:\\Users\\france\\source\\MyProject\\videos\\example_2.AVI");
-    if (!capture_0.isOpened())
-    {
-        throw "Unable to open source file";
-    }
-    namedWindow("Video");
-
-    setMouseCallback("Video", CallBackFunction, NULL);
-
-    Mat frame;
-    capture_0 >> frame;
-    
-    imshow("Video", frame);
-
-    while (count_of_added_points < 4)
-    {
-        
-        if (frame.empty())
-        {
-            break;
-        }
-        
-        int key = waitKey();
-        if (key == 27)
-        {
-            break;
-        }
-
-    }
-    */
-   
+{  
     VideoCapture capture("C:\\Users\\france\\source\\MyProject\\videos\\example_2.avi");
     if (!capture.isOpened()) 
     {
@@ -81,10 +49,16 @@ int main(int argc, char** argv)
         return 0;
     }
 
+    Mat frame;
+    capture >> frame;
+
+//    canny_alg::canny_algorithm(frame, frame);
+//    imshow("Result", frame);
+//    waitKey(100000);
     alg.add_point(Point2f(509, 412));
     alg.add_point(Point2f(473, 569));
     alg.optical_flow_alg(capture);
- //   setMouseCallback("Frame", CallBackFunction, NULL);
+//    setMouseCallback("Frame", CallBackFunction, NULL);
 
 
     
