@@ -14,10 +14,13 @@ using namespace cv;
 using namespace std;
 using namespace MyProject;
 
-Point point1;
-Point point2;
+Point2f point;
 
-//Speed video_speed;
+optical_flow alg;
+
+int count_of_added_points = 0;
+
+// Speed video_speed;
 
 void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 {
@@ -25,8 +28,9 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
     {
     case EVENT_LBUTTONDOWN:
         cout << "Left button pressed on position:" << x << " " << y << endl;
-        point1 = point2;
-        point2 = Point(x, y);
+        point = Point2f(x, y);
+        alg.add_point(point);
+        count_of_added_points++;
         break;
     case EVENT_RBUTTONDOWN:
   //      video_speed.changeSpeed();
@@ -37,55 +41,27 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 
 
 int main(int argc, char** argv)
-{
-    /*
-    VideoCapture capture("C:\\Users\\france\\source\\MyProject\\videos\\example_2.AVI");
-    if (!capture.isOpened())
-    {
-        throw "Unable to open source file";
-    }
-    namedWindow("Video");
-
-    setMouseCallback("Video", CallBackFunction, NULL);
-
-    Mat frame;
-    capture >> frame;
-    imshow("Video", frame);
-    waitKey(1000);
-    while (true)
-    {
-        Mat frame;
-        capture >> frame;
-
-        if (frame.empty())
-        {
-            break;
-        }
-        line(frame, point1, point2, Scalar(0.5, 0.7, 0.3), 2, LINE_8);
-        imshow("Video", frame);
-
-        int key = waitKey();
-        if (key == 27)
-        {
-            break;
-        }
-
-    }
-
-    capture.release();
-    return 0;
-  */
-   
+{  
     VideoCapture capture("C:\\Users\\france\\source\\MyProject\\videos\\example_2.avi");
-    if (!capture.isOpened()) {
+    if (!capture.isOpened()) 
+    {
         cerr << "Unable to open file!" << endl;
         return 0;
     }
 
- //   setMouseCallback("Frame", CallBackFunction, NULL);
+    Mat frame;
+    capture >> frame;
 
-    optical_flow::optical_flow_alg(capture);
+//    canny_alg::canny_algorithm(frame, frame);
+//    imshow("Result", frame);
+//    waitKey(100000);
+    alg.add_point(Point2f(509, 412));
+    alg.add_point(Point2f(473, 569));
+    alg.optical_flow_alg(capture);
+//    setMouseCallback("Frame", CallBackFunction, NULL);
 
+
+    
     return 1;
 }
 
