@@ -22,6 +22,8 @@ int count_of_added_points = 0;
 
 // Speed video_speed;
 
+typedef unsigned char uchar;
+
 void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 {
     switch (event)
@@ -52,6 +54,11 @@ int main(int argc, char** argv)
     Mat frame;
     capture >> frame;
 
+    imshow("frame", frame);
+
+
+
+
 //    canny_alg::canny_algorithm(frame, frame);
 //    imshow("Result", frame);
 //    waitKey(100000);
@@ -73,7 +80,7 @@ int main(int argc, char** argv)
         line(frame, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 0, 0), 3, LINE_AA);
     }
 
-    imshow("frame", frame);
+    imshow("frame_1", frame);
     waitKey(10000);
     return 1;
 }
