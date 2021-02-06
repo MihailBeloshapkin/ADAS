@@ -42,7 +42,7 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 
 int main(int argc, char** argv)
 {  
-    VideoCapture capture("C:\\Users\\france\\source\\MyProject\\videos\\example_2.avi");
+    VideoCapture capture("C:\\videos\\example_2.avi");
     if (!capture.isOpened()) 
     {
         cerr << "Unable to open file!" << endl;
@@ -55,13 +55,26 @@ int main(int argc, char** argv)
 //    canny_alg::canny_algorithm(frame, frame);
 //    imshow("Result", frame);
 //    waitKey(100000);
-    alg.add_point(Point2f(509, 412));
-    alg.add_point(Point2f(473, 569));
-    alg.optical_flow_alg(capture);
+//    alg.add_point(Point2f(509, 412));
+//   alg.add_point(Point2f(473, 569));
+//    alg.optical_flow_alg(capture);
 //    setMouseCallback("Frame", CallBackFunction, NULL);
+    canny_alg::canny_algorithm(frame, frame);
 
+    imshow("canny", frame);
+ 
+    vector<Vec4i> lines;
 
+    HoughLinesP(frame, lines, 1, CV_PI/180, 500, 10, 250);
     
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        Vec4i l = lines[i];
+        line(frame, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 0, 0), 3, LINE_AA);
+    }
+
+    imshow("frame", frame);
+    waitKey(10000);
     return 1;
 }
 
