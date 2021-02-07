@@ -14,7 +14,7 @@ namespace MyProject
         cvtColor(frame, gray, COLOR_BGR2GRAY);
         GaussianBlur(gray, detected_edges, Size(5, 5), 0);
         Canny(detected_edges, detected_edges, lowThreshold, lowThreshold * 3, kernel_size);
-    //    imshow("canny", detected_edges);
+        imshow("canny", detected_edges);
     }
 
 }

@@ -39,9 +39,21 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
         count_of_added_points++;
         break;
     case EVENT_RBUTTONDOWN:
-        cout << "R " << static_cast<int>(src.at<Vec3b>(y, x)[0])
-             << ";G " << static_cast<int>(src.at<Vec3b>(y, x)[1])
-             << ";B " << static_cast<int>(src.at<Vec3b>(y, x)[2]) << endl;
+        int rgb[3];
+        rgb[0] = static_cast<int>(src.at<Vec3b>(y, x)[0]);
+        rgb[1] = static_cast<int>(src.at<Vec3b>(y, x)[1]);
+        rgb[2] = static_cast<int>(src.at<Vec3b>(y, x)[2]);
+        cout << "R " << rgb[0]
+             << ";G " << rgb[1]
+             << ";B " << rgb[2] << endl;
+        if (rgb[0] > 170 && rgb[1] > 170 && rgb[2] > 170)
+        {
+            cout << "snow" << endl;
+        }
+        else
+        {
+            cout << "road" << endl;
+        }
         break;
     default:
         break;
@@ -68,6 +80,34 @@ int main(int argc, char** argv)
     frame.copyTo(src);
 
     imshow("Get_RGB_values", src);
+
+    for (int y = 0; y < frame.rows; y++)
+    {
+        for (int x = 0; x < frame.cols; x++)
+        {
+            int rgb[3];
+            rgb[0] = static_cast<int>(src.at<Vec3b>(y, x)[0]);
+            rgb[1] = static_cast<int>(src.at<Vec3b>(y, x)[1]);
+            rgb[2] = static_cast<int>(src.at<Vec3b>(y, x)[2]);
+
+            if (rgb[0] > 170 && rgb[1] > 170 && rgb[2] > 170 && y > frame.rows / 2)
+            {
+                frame.at<Vec3b>(y, x)[0] = 255;
+                frame.at<Vec3b>(y, x)[1] = 255;
+                frame.at<Vec3b>(y, x)[2] = 255;
+            }
+            else
+            {
+                frame.at<Vec3b>(y, x)[0] = 0;
+                frame.at<Vec3b>(y, x)[1] = 0;
+                frame.at<Vec3b>(y, x)[2] = 0;
+            }
+        }
+    }
+
+    imshow("result", frame);
+
+    canny_alg::canny_algorithm(frame, frame);
 
     //    imshow("frame", frame);
     /*
@@ -111,7 +151,7 @@ int main(int argc, char** argv)
 //    setMouseCallback("Frame", CallBackFunction, NULL);
    // canny_alg::canny_algorithm(frame, frame);
 
-    waitKey(100000);
+    waitKey(1000000);
     return 1;
 }
 
