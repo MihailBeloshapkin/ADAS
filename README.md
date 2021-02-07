@@ -5,4 +5,4 @@ This is a university project, and the reason why I choosed this theme is a wish 
 <li> C++
 <li> OpenCV
   
-![alt text](images\pict1.png)
+![alt text](images/pict1.png)
