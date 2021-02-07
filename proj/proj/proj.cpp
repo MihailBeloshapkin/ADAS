@@ -105,9 +105,43 @@ int main(int argc, char** argv)
         }
     }
 
+    
+    canny_alg::canny_algorithm(frame, frame);
+    
+    vector<Vec4i> lines;
+
+    
+    HoughLinesP(frame, lines, 1, CV_PI / 180, 50, 30, 350);
+    cvtColor(frame, frame, CV_8U);
+  
+    vector<float> tangs;
+
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        Vec4i l = lines[i];
+
+        int coord1 = l[1];
+        int coord2 = l[3];
+
+        float tan = (float)(l[1] - l[3]) / (float)(l[2] - l[0]);
+        
+        tangs.push_back(tan);
+        
+        
+        if (tan > 0.3 || tan < -0.3)
+        {
+            line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 0, 255), 3, LINE_AA);
+        }
+    }
+
+    for (int i = 0; i < tangs.size(); i++)
+    {
+        cout << tangs[i] << endl;
+    }
+
     imshow("result", frame);
 
-    canny_alg::canny_algorithm(frame, frame);
+    imshow("result_src", src);
 
     //    imshow("frame", frame);
     /*
