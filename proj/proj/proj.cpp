@@ -22,6 +22,10 @@ int count_of_added_points = 0;
 
 // Speed video_speed;
 
+vector<Mat> splited_hsv = vector<Mat>();
+
+Mat src;
+
 typedef unsigned char uchar;
 
 void CallBackFunction(int event, int x, int y, int flags, void* userdata)
@@ -35,7 +39,10 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
         count_of_added_points++;
         break;
     case EVENT_RBUTTONDOWN:
-  //      video_speed.changeSpeed();
+        cout << "R " << static_cast<int>(src.at<Vec3b>(y, x)[0])
+             << ";G " << static_cast<int>(src.at<Vec3b>(y, x)[1])
+             << ";B " << static_cast<int>(src.at<Vec3b>(y, x)[2]) << endl;
+        break;
     default:
         break;
     }
@@ -54,10 +61,46 @@ int main(int argc, char** argv)
     Mat frame;
     capture >> frame;
 
-    imshow("frame", frame);
+    namedWindow("Get_RGB_values");
+    
+    setMouseCallback("Get_RGB_values", CallBackFunction, nullptr);
 
+    frame.copyTo(src);
 
+    imshow("Get_RGB_values", src);
 
+    //    imshow("frame", frame);
+    /*
+    //Get hsv array from the origin image.
+    Mat hsv = Mat(frame.cols, frame.rows, 8, 3);
+    vector<Mat> splited_hsv = vector<Mat>();
+    cvtColor(frame, hsv, COLOR_BGR2HSV);
+    split(hsv, splited_hsv);
+    
+    Mat src;
+    frame.copyTo(src);
+    for (int y = 0; y < hsv.cols; y++)
+    {
+        for (int x = 0; x < hsv.rows; x++)
+        {
+            int H = static_cast<int>(splited_hsv[0].at<unsigned char>(x, y));
+            if (H < 50 || H > 100)
+            {
+                src.at<Vec3b>(x, y)[0] = 255;
+                src.at<Vec3b>(x, y)[1] = 255;
+                src.at<Vec3b>(x, y)[2] = 255;
+            }
+        }
+    }
+
+    imshow("src", src);
+    */
+//    imshow("1", splited_hsv[0]);
+//    imshow("2", splited_hsv[1]);
+//    imshow("3", splited_hsv[2]);
+
+    // Get road
+    // Mat hsv = Mat(frame.cols, frame.rows, 8, 3);
 
 //    canny_alg::canny_algorithm(frame, frame);
 //    imshow("Result", frame);
@@ -66,22 +109,9 @@ int main(int argc, char** argv)
 //   alg.add_point(Point2f(473, 569));
 //    alg.optical_flow_alg(capture);
 //    setMouseCallback("Frame", CallBackFunction, NULL);
-    canny_alg::canny_algorithm(frame, frame);
+   // canny_alg::canny_algorithm(frame, frame);
 
-    imshow("canny", frame);
- 
-    vector<Vec4i> lines;
-
-    HoughLinesP(frame, lines, 1, CV_PI/180, 500, 10, 250);
-    
-    for (size_t i = 0; i < lines.size(); i++)
-    {
-        Vec4i l = lines[i];
-        line(frame, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 0, 0), 3, LINE_AA);
-    }
-
-    imshow("frame_1", frame);
-    waitKey(10000);
+    waitKey(100000);
     return 1;
 }
 

@@ -18,6 +18,7 @@ namespace MyProject
 		static vector<Point2f> p1;
 		static vector<Point2f> added;
 	public:
+		// Add point to trech.
 		static void add_point(Point2f new_point);
 
 		// Calculate optical flow according the input vector of points.
