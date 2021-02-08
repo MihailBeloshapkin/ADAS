@@ -10,4 +10,22 @@ C:\Users\france\source\MyProject\proj\proj\proj.cpp(37,25): warning C4244: ар�
           [
               _Tp=float
           ]
+C:\Users\france\source\MyProject\proj\proj\proj.cpp(67,32): warning C4244: =: преобразование "_Tp" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
+C:\Users\france\source\MyProject\proj\proj\proj.cpp(68,32): warning C4244: =: преобразование "_Tp" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
   proj.vcxproj -> C:\Users\france\source\MyProject\proj\x64\Debug\proj.exe

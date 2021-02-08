@@ -61,6 +61,26 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
 }
 
 
+void shift_line_down(Vec4i& line)
+{
+    Vec2f motion_vector;
+    motion_vector[0] = line[2] - line[0];
+    motion_vector[1] = line[3] - line[1];
+ 
+    float length = sqrt(motion_vector[0] * motion_vector[0] + motion_vector[1] * motion_vector[1]);
+    motion_vector[0] /= length;
+    motion_vector[1] /= length;
+    if (motion_vector[1] < 0)
+    {
+        motion_vector[0] *= -1;
+        motion_vector[1] *= -1;
+    }
+    line[0] += (int)(motion_vector[0] * 70);
+    line[2] += (int)(motion_vector[0] * 70);
+    line[1] += (int)(motion_vector[1] * 70);
+    line[3] += (int)(motion_vector[1] * 70);
+}
+
 int main(int argc, char** argv)
 {  
     VideoCapture capture("C:\\videos\\example_2.avi");
@@ -127,10 +147,11 @@ int main(int argc, char** argv)
         
         tangs.push_back(tan);
         
-        
-        if (tan > 0.3 || tan < -0.3)
+     //   line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 3, LINE_AA);
+        if (tan > 0.2 || tan < -0.2)
         {
-            line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 0, 255), 3, LINE_AA);
+            shift_line_down(l);
+            line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 1, LINE_AA);
         }
     }
 
@@ -185,7 +206,15 @@ int main(int argc, char** argv)
 //    setMouseCallback("Frame", CallBackFunction, NULL);
    // canny_alg::canny_algorithm(frame, frame);
 
-    waitKey(1000000);
+    while (true)
+    {
+        int key = waitKey(33);
+        if (key == 27)
+        {
+            break;
+        }
+    }
+
     return 1;
 }
 
