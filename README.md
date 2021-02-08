@@ -9,3 +9,5 @@ This is a university project, and the reason why I choosed this theme is a wish 
 ![alt text](images/pict1.png)
 
 And the first problem is to detect road boundaries. To solve this, we should apply color filters and Canny.
+
+![alt text](images/pict2.png)
