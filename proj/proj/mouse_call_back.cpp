@@ -2,7 +2,7 @@
 
 namespace MyProject
 {
-	static cv::Mat src;
+	cv::Mat src;
 
 	mouse_call_back::mouse_call_back(cv::Mat frame)
 	{
@@ -17,7 +17,7 @@ namespace MyProject
         switch (event)
         {
         case EVENT_LBUTTONDOWN:
-            cout << "Left button pressed on position:" << x << " " << y << std::endl;
+            std::cout << "Left button pressed on position:" << x << " " << y << std::endl;
             break;
         case EVENT_RBUTTONDOWN:
             int rgb[3];
