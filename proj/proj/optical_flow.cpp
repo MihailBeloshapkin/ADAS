@@ -58,9 +58,7 @@ namespace MyProject
             }
 
             cvtColor(subFrame, frame_gray, COLOR_BGR2GRAY);
-            imshow("Gray", frame_gray);
-
-
+            
             vector<uchar> status;
             vector<float> err;
             TermCriteria criteria = TermCriteria((TermCriteria::COUNT) + (TermCriteria::EPS), 10, 0.03);
@@ -76,7 +74,7 @@ namespace MyProject
                     line(mask, p1[i], p0[i], colors[i], 2);
                     circle(frame, p1[i], 5, colors[i], -1);
                 }
-            }
+            } 
             Mat img;
             add(subFrame, mask, img);
             imshow("Frame", img);

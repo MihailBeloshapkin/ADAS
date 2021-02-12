@@ -75,6 +75,7 @@ void shift_line_down(Vec4i& line)
         motion_vector[0] *= -1;
         motion_vector[1] *= -1;
     }
+
     line[0] += (int)(motion_vector[0] * 70);
     line[2] += (int)(motion_vector[0] * 70);
     line[1] += (int)(motion_vector[1] * 70);
@@ -159,8 +160,6 @@ int main(int argc, char** argv)
     {
         cout << tangs[i] << endl;
     }
-
-    imshow("result", frame);
 
     imshow("result_src", src);
 

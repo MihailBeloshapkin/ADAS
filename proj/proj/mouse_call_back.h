@@ -7,6 +7,7 @@
 #include <opencv2/video.hpp>
 
 using namespace cv;
+using namespace std;
 
 namespace MyProject
 {
@@ -17,6 +18,7 @@ namespace MyProject
 		cv::Mat src;
 
 	public:
+		// Constructor.
 		mouse_call_back(cv::Mat frame);
 
 		// right and left button reaction. 
