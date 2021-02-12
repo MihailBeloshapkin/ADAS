@@ -9,7 +9,6 @@
 #include "canny_alg.h"
 #include "optical_flow.h"
 #include "watershed_algorithm.h"
-#include "mouse_call_back.h"
 
 using namespace cv;
 using namespace std;
@@ -97,7 +96,6 @@ int main(int argc, char** argv)
 
     namedWindow("Get_RGB_values");
     
-    mouse_call_back call_back(frame);
     setMouseCallback("Get_RGB_values", CallBackFunction, nullptr);
 
     frame.copyTo(src);
