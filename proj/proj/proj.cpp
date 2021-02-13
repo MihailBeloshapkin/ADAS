@@ -9,6 +9,7 @@
 #include "canny_alg.h"
 #include "optical_flow.h"
 #include "watershed_algorithm.h"
+#include "offset_lines.h"
 
 using namespace cv;
 using namespace std;
@@ -151,7 +152,7 @@ int main(int argc, char** argv)
      //   line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 3, LINE_AA);
         if (tan > 0.2 || tan < -0.2)
         {
-            shift_line_down(l);
+            offset_lines::shift_line_down(l);
             line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 1, LINE_AA);
         }
     }
