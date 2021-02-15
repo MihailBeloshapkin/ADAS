@@ -1,8 +1,8 @@
-#include "offset_lines.h"
+#include "line_transfer.h"
 
 namespace MyProject
 {
-	void offset_lines::shift_line_down(cv::Vec4i& line)
+	void line_transfer::shift_line_down(cv::Vec4i& line)
 	{
         Vec2f motion_vector;
         motion_vector[0] = line[2] - line[0];

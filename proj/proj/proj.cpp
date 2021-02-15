@@ -5,11 +5,10 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
 #include <iostream>
-#include "Speed.h"
 #include "canny_alg.h"
 #include "optical_flow.h"
 #include "watershed_algorithm.h"
-#include "offset_lines.h"
+#include "line_transfer.h"
 
 using namespace cv;
 using namespace std;
@@ -59,28 +58,6 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
     default:
         break;
     }
-}
-
-
-void shift_line_down(Vec4i& line)
-{
-    Vec2f motion_vector;
-    motion_vector[0] = line[2] - line[0];
-    motion_vector[1] = line[3] - line[1];
- 
-    float length = sqrt(motion_vector[0] * motion_vector[0] + motion_vector[1] * motion_vector[1]);
-    motion_vector[0] /= length;
-    motion_vector[1] /= length;
-    if (motion_vector[1] < 0)
-    {
-        motion_vector[0] *= -1;
-        motion_vector[1] *= -1;
-    }
-
-    line[0] += (int)(motion_vector[0] * 70);
-    line[2] += (int)(motion_vector[0] * 70);
-    line[1] += (int)(motion_vector[1] * 70);
-    line[3] += (int)(motion_vector[1] * 70);
 }
 
 int main(int argc, char** argv)
@@ -138,6 +115,8 @@ int main(int argc, char** argv)
   
     vector<float> tangs;
 
+    vector<Point2f> points;
+
     for (size_t i = 0; i < lines.size(); i++)
     {
         Vec4i l = lines[i];
@@ -152,7 +131,9 @@ int main(int argc, char** argv)
      //   line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 3, LINE_AA);
         if (tan > 0.2 || tan < -0.2)
         {
-            offset_lines::shift_line_down(l);
+            line_transfer::shift_line_down(l);
+            points.push_back(Point2f(l[0], l[1]));
+            points.push_back(Point2f(l[2], l[3]));
             line(src, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 69, 255), 1, LINE_AA);
         }
     }
@@ -164,51 +145,30 @@ int main(int argc, char** argv)
 
     imshow("result_src", src);
 
-    //    imshow("frame", frame);
-    /*
-    //Get hsv array from the origin image.
-    Mat hsv = Mat(frame.cols, frame.rows, 8, 3);
-    vector<Mat> splited_hsv = vector<Mat>();
-    cvtColor(frame, hsv, COLOR_BGR2HSV);
-    split(hsv, splited_hsv);
-    
-    Mat src;
-    frame.copyTo(src);
-    for (int y = 0; y < hsv.cols; y++)
-    {
-        for (int x = 0; x < hsv.rows; x++)
-        {
-            int H = static_cast<int>(splited_hsv[0].at<unsigned char>(x, y));
-            if (H < 50 || H > 100)
-            {
-                src.at<Vec3b>(x, y)[0] = 255;
-                src.at<Vec3b>(x, y)[1] = 255;
-                src.at<Vec3b>(x, y)[2] = 255;
-            }
-        }
-    }
 
-    imshow("src", src);
-    */
-//    imshow("1", splited_hsv[0]);
-//    imshow("2", splited_hsv[1]);
-//    imshow("3", splited_hsv[2]);
-
-    // Get road
-    // Mat hsv = Mat(frame.cols, frame.rows, 8, 3);
-
-//    canny_alg::canny_algorithm(frame, frame);
-//    imshow("Result", frame);
-//    waitKey(100000);
-//    alg.add_point(Point2f(509, 412));
-//   alg.add_point(Point2f(473, 569));
-//    alg.optical_flow_alg(capture);
-//    setMouseCallback("Frame", CallBackFunction, NULL);
-   // canny_alg::canny_algorithm(frame, frame);
+    Mat current_frame;
+    Mat prev_frame;
+    frame.copyTo(prev_frame);
 
     while (true)
     {
+        capture >> current_frame;
+        optical_flow::optical_flow_alg(frame, current_frame, points);
+        
+        current_frame.copyTo(current_frame);
+
+        Mat result_frame;
+        current_frame.copyTo(result_frame);
+
+        for (int i = 0; i < points.size() / 2; i++)
+        {
+            line(result_frame, points[i], points[i + 1], Scalar(0, 0, 255), 1, LINE_AA);
+        }
+
+        imshow("result_frame", result_frame);
+
         int key = waitKey(33);
+        
         if (key == 27)
         {
             break;
@@ -217,4 +177,3 @@ int main(int argc, char** argv)
 
     return 1;
 }
-

@@ -11,7 +11,7 @@ using namespace cv;
 namespace MyProject
 {
 	// This class contains methods to move lines on the image.
-	class offset_lines
+	class line_transfer
 	{
 	public:
 		// This method applies parallel transfer of the image. 

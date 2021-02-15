@@ -23,8 +23,6 @@ namespace MyProject
 
     public:
         static void canny_algorithm(Mat frame, Mat& detected_edges);
-
-    
     };
 
 }

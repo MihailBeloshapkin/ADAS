@@ -30,7 +30,7 @@
     <ClCompile Include="hough_transformation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="offset_lines.cpp">
+    <ClCompile Include="line_transfer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="hough_transformation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="offset_lines.h">
+    <ClInclude Include="line_transfer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
