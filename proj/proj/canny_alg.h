@@ -14,15 +14,13 @@ namespace MyProject
     class canny_alg
     {
     private:
-        //   canny_alg() {}
-
-        static const int lowThreshold = 0;
-        static const int max_lowThreshold = 100;
-        static const int ratio = 3;
-        static const int kernel_size = 3;
+        const int low_threshold = 0;
+        const int kernel_size = 3;
 
     public:
-        static void canny_algorithm(Mat frame, Mat& detected_edges);
+        canny_alg(int _low_threashold, int _kernel_size);
+
+        void canny_algorithm(Mat frame, Mat& detected_edges);
     };
 
 }

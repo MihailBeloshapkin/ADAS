@@ -105,11 +105,11 @@ int main(int argc, char** argv)
     }
 
     
-    canny_alg::canny_algorithm(frame, frame);
+    canny_alg canny(0, 3);
+    canny.canny_algorithm(frame, frame);
     
     vector<Vec4i> lines;
 
-    
     HoughLinesP(frame, lines, 1, CV_PI / 180, 50, 30, 350);
     cvtColor(frame, frame, CV_8U);
   

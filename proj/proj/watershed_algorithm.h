@@ -13,6 +13,7 @@ using namespace cv;
 
 namespace MyProject
 {
+	// This class contains methods for watershed algorhitm.
 	class watershed
 	{
 	public:
