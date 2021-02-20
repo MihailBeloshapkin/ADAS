@@ -13,10 +13,14 @@ using namespace cv;
 
 namespace MyProject
 {
+	// This class contains methods for watershed algorhitm.
 	class watershed
 	{
 	public:
+		// Add set of points
 		static void set_points(std::vector<Point2f> points);
+		
+		// Watershed algorhitm.
 		static void watershed_alg(Mat img);
 	};
 }

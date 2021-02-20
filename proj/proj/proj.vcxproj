@@ -152,7 +152,7 @@
   <ItemGroup>
     <ClCompile Include="canny_alg.cpp" />
     <ClCompile Include="hough_transformation.cpp" />
-    <ClCompile Include="mouse_call_back.cpp" />
+    <ClCompile Include="line_transfer.cpp" />
     <ClCompile Include="optical_flow.cpp" />
     <ClCompile Include="proj.cpp" />
     <ClCompile Include="watershed_algorithm.cpp" />
@@ -160,7 +160,7 @@
   <ItemGroup>
     <ClInclude Include="canny_alg.h" />
     <ClInclude Include="hough_transformation.h" />
-    <ClInclude Include="mouse_call_back.h" />
+    <ClInclude Include="line_transfer.h" />
     <ClInclude Include="optical_flow.h" />
     <ClInclude Include="watershed_algorithm.h" />
   </ItemGroup>
