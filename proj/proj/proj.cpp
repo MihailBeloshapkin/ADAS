@@ -105,7 +105,7 @@ int main(int argc, char** argv)
     }
 
     
-    canny_alg canny(0, 3);
+    canny_alg canny(1, 3);
     canny.canny_algorithm(frame, frame);
     
     vector<Vec4i> lines;
@@ -138,6 +138,12 @@ int main(int argc, char** argv)
         }
     }
 
+
+
+    vector<Point2f> points_for_tretch;
+    
+    optical_flow::tretch_points(capture, points);
+
     for (int i = 0; i < tangs.size(); i++)
     {
         cout << tangs[i] << endl;
@@ -149,6 +155,8 @@ int main(int argc, char** argv)
     Mat current_frame;
     Mat prev_frame;
     frame.copyTo(prev_frame);
+
+    waitKey(100000);
 
     while (true)
     {

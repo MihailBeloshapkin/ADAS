@@ -7,7 +7,7 @@ namespace MyProject
 
 	void hough_transformation::line_transformation(Mat image, Mat& result)
 	{
-		HoughLinesP(image, lines, 1, CV_PI / 180, 500, 10, 250);
+		HoughLinesP(image, lines, 1, CV_PI / 180, 500, 10, 200);
 
 		for (size_t i = 0; i < lines.size(); i++)
 		{

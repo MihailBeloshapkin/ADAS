@@ -154,6 +154,7 @@
     <ClCompile Include="hough_transformation.cpp" />
     <ClCompile Include="line_transfer.cpp" />
     <ClCompile Include="optical_flow.cpp" />
+    <ClCompile Include="process.cpp" />
     <ClCompile Include="proj.cpp" />
     <ClCompile Include="watershed_algorithm.cpp" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="hough_transformation.h" />
     <ClInclude Include="line_transfer.h" />
     <ClInclude Include="optical_flow.h" />
+    <ClInclude Include="process.h" />
     <ClInclude Include="watershed_algorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
