@@ -2,6 +2,7 @@
 
 namespace MyProject
 {
+    // This method applies parallel transfer of the image.
 	void line_transfer::shift_line_down(cv::Vec4i& line)
 	{
         Vec2f motion_vector;
@@ -22,4 +23,9 @@ namespace MyProject
         line[1] += (int)(motion_vector[1] * 70);
         line[3] += (int)(motion_vector[1] * 70);
 	}
+
+    bool line_transfer::is_intersection(cv::Vec4i lines)
+    {
+        return true;
+    }
 }

@@ -16,6 +16,9 @@ namespace MyProject
 	public:
 		// This method applies parallel transfer of the image. 
 		static void shift_line_down(cv::Vec4i& line);
+
+		// This method chacs that lines are intersectiong.
+		static bool is_intersection(cv::Vec4i lines)
 	};
 }
 
