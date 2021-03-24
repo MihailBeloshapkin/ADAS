@@ -12,6 +12,7 @@ using namespace std;
 
 namespace MyProject
 {
+    // Watershed algorithm.
 	void watershed::watershed_alg(Mat frame)
 	{
         Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
