@@ -12,7 +12,13 @@ using namespace std;
 
 namespace MyProject
 {
-    // Watershed algorithm.
+    
+    void watershed::watershed_alg(Mat frame)
+    {
+        Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
+    }
+
+    /*
 	void watershed::watershed_alg(Mat frame)
 	{
         Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
@@ -43,5 +49,5 @@ namespace MyProject
         {
             drawContours(markers, contours, static_cast<int>(i), Scalar(static_cast<int>(i) + 1), -1);
         }
-	}
+	}*/
 }
