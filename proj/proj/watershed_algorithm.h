@@ -6,7 +6,7 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
 #include <iostream>
-#include "canny_alg.h"
+#include "filters.h"
 
 using namespace cv;
 

@@ -150,7 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="canny_alg.cpp" />
+    <ClCompile Include="filters.cpp" />
     <ClCompile Include="hough_transformation.cpp" />
     <ClCompile Include="line_transfer.cpp" />
     <ClCompile Include="optical_flow.cpp" />
@@ -159,7 +159,7 @@
     <ClCompile Include="watershed_algorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="canny_alg.h" />
+    <ClInclude Include="filters.h" />
     <ClInclude Include="hough_transformation.h" />
     <ClInclude Include="line_transfer.h" />
     <ClInclude Include="optical_flow.h" />

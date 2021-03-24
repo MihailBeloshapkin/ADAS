@@ -11,16 +11,18 @@ using namespace cv;
 namespace MyProject
 {
     //Canny algorithm class.
-    class canny_alg
+    class filters
     {
     private:
         const int low_threshold = 0;
         const int kernel_size = 3;
 
     public:
-        canny_alg(int _low_threashold, int _kernel_size);
+        filters(int _low_threashold, int _kernel_size);
 
         void canny_algorithm(Mat frame, Mat& detected_edges);
+
+        void binary_filter(Mat frame, Mat& result);
     };
 
 }
