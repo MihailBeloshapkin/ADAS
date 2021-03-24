@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace MyProject
+namespace ADAS
 {
     
     void watershed::watershed_alg(Mat frame)

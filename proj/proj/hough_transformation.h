@@ -10,7 +10,7 @@ using namespace cv;
 using namespace std;
 
 //This class contaion Huogh kine transformation.
-namespace MyProject
+namespace ADAS
 {
 	class hough_transformation
 	{

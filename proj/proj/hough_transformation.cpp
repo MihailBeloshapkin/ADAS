@@ -1,6 +1,6 @@
 #include "hough_transformation.h"
 
-namespace MyProject
+namespace ADAS
 {
 	// Contaions lines for the source image.
 	vector<Vec4i> hough_transformation::lines;

@@ -1,7 +1,8 @@
 #include "line_transfer.h"
 
-namespace MyProject
+namespace ADAS
 {
+    // Shif line in correct direction.
     void line_transfer::shift_line_down(cv::Vec4i& line)
     {
         Vec2f motion_vector;
@@ -21,5 +22,11 @@ namespace MyProject
         line[2] += (int)(motion_vector[0] * 70);
         line[1] += (int)(motion_vector[1] * 70);
         line[3] += (int)(motion_vector[1] * 70);
+    }
+
+    // Calculate tangens.
+    float line_transfer::tan(Vec4i line)
+    {
+        return (float)(line[1] - line[3]) / (float)(line[2] - line[0]);
     }
 }

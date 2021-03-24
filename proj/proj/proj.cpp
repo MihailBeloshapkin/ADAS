@@ -12,7 +12,7 @@
 
 using namespace cv;
 using namespace std;
-using namespace MyProject;
+using namespace ADAS;
 
 Point2f point;
 
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     Mat result;
     
     filters current_filter(1, 3);
-    current_filter.binary_filter(frame, frame);
+    current_filter.binary_filter(frame, frame, 170, 170, 170);
 
     
     

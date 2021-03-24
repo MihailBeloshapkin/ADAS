@@ -3,13 +3,13 @@
 
 using namespace cv;
 
-namespace MyProject
+namespace ADAS
 {
     filters::filters(int _low_threashold, int _kernel_size) : low_threshold(_low_threashold), kernel_size(_kernel_size)
     {}
 
     // Special filter.
-    void filters::binary_filter(Mat frame, Mat& result)
+    void filters::binary_filter(Mat frame, Mat& result, unsigned char border_r, unsigned char border_g, unsigned char border_b)
     {
         frame.copyTo(result);
 
@@ -22,7 +22,7 @@ namespace MyProject
                 rgb[1] = static_cast<int>(result.at<Vec3b>(y, x)[1]);
                 rgb[2] = static_cast<int>(result.at<Vec3b>(y, x)[2]);
 
-                if (rgb[0] > 170 && rgb[1] > 170 && rgb[2] > 170 && y > frame.rows / 2)
+                if (rgb[0] > border_r && rgb[1] > border_g && rgb[2] > border_b && y > frame.rows / 2)
                 {
                     result.at<Vec3b>(y, x)[0] = 255;
                     result.at<Vec3b>(y, x)[1] = 255;

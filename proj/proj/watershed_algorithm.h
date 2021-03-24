@@ -10,7 +10,7 @@
 
 using namespace cv;
 
-namespace MyProject
+namespace ADAS
 {
 	// This class contains methods for watershed algorhitm.
 	class watershed
