@@ -8,23 +8,19 @@
 
 using namespace cv;
 
-namespace ADAS
+namespace MyProject
 {
     //Canny algorithm class.
-    class filters
+    class canny_alg
     {
     private:
         const int low_threshold = 0;
         const int kernel_size = 3;
 
     public:
-        filters(int _low_threashold, int _kernel_size);
+        canny_alg(int _low_threashold, int _kernel_size);
 
-        // Canny.
         void canny_algorithm(Mat frame, Mat& detected_edges);
-
-        // Special binary filter.
-        void binary_filter(Mat frame, Mat& result, unsigned char border_r, unsigned char border_g, unsigned char border_b);
     };
 
 }
