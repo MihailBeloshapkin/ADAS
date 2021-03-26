@@ -10,10 +10,11 @@
 
 using namespace std;
 
-namespace MyProject
+namespace ADAS
 {
-	void watershed::watershed_alg(Mat frame)
-	{
+    
+    void watershed::watershed_alg(Mat frame)
+    {
         Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
         Mat gray;
         Mat bw;
@@ -42,5 +43,5 @@ namespace MyProject
         {
             drawContours(markers, contours, static_cast<int>(i), Scalar(static_cast<int>(i) + 1), -1);
         }
-	}
+    }
 }

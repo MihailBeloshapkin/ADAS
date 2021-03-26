@@ -9,7 +9,7 @@
 using namespace cv;
 using namespace std;
 
-namespace MyProject
+namespace ADAS
 {
 	class optical_flow
 	{
@@ -24,6 +24,9 @@ namespace MyProject
 
 		// Calculate optical flow according the input vector of points.
 		static void optical_flow_alg(cv::Mat prev_frame, cv::Mat current_frame, vector<Point2f> points);
+
+		// Tretch set of points.
+		static void tretch_points(cv::VideoCapture capture, vector<cv::Point2f> points);
 	};
 
 }

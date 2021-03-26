@@ -6,12 +6,11 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
 #include <iostream>
-#include "Speed.h"
-#include "canny_alg.h"
+#include "filters.h"
 
 using namespace cv;
 
-namespace MyProject
+namespace ADAS
 {
 	// This class contains methods for watershed algorhitm.
 	class watershed
