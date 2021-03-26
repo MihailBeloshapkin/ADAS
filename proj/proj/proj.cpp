@@ -5,14 +5,14 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
 #include <iostream>
-#include "filters.h"
+#include "canny_alg.h"
 #include "optical_flow.h"
 #include "watershed_algorithm.h"
 #include "line_transfer.h"
 
 using namespace cv;
 using namespace std;
-using namespace ADAS;
+using namespace MyProject;
 
 Point2f point;
 
@@ -80,16 +80,34 @@ int main(int argc, char** argv)
 
     imshow("Get_RGB_values", src);
 
-    Mat result;
-    
-    filters current_filter(1, 3);
-    current_filter.binary_filter(frame, frame, 170, 170, 170);
+    for (int y = 0; y < frame.rows; y++)
+    {
+        for (int x = 0; x < frame.cols; x++)
+        {
+            int rgb[3];
+            rgb[0] = static_cast<int>(src.at<Vec3b>(y, x)[0]);
+            rgb[1] = static_cast<int>(src.at<Vec3b>(y, x)[1]);
+            rgb[2] = static_cast<int>(src.at<Vec3b>(y, x)[2]);
+
+            if (rgb[0] > 170 && rgb[1] > 170 && rgb[2] > 170 && y > frame.rows / 2)
+            {
+                frame.at<Vec3b>(y, x)[0] = 255;
+                frame.at<Vec3b>(y, x)[1] = 255;
+                frame.at<Vec3b>(y, x)[2] = 255;
+            }
+            else
+            {
+                frame.at<Vec3b>(y, x)[0] = 0;
+                frame.at<Vec3b>(y, x)[1] = 0;
+                frame.at<Vec3b>(y, x)[2] = 0;
+            }
+        }
+    }
 
     
+    canny_alg canny(0, 3);
+    canny.canny_algorithm(frame, frame);
     
-    current_filter.canny_algorithm(frame, frame);
-    
-
     vector<Vec4i> lines;
 
     HoughLinesP(frame, lines, 1, CV_PI / 180, 50, 30, 350);
@@ -120,12 +138,6 @@ int main(int argc, char** argv)
         }
     }
 
-
-
-    vector<Point2f> points_for_tretch;
-    
-    optical_flow::tretch_points(capture, points);
-
     for (int i = 0; i < tangs.size(); i++)
     {
         cout << tangs[i] << endl;
@@ -137,8 +149,6 @@ int main(int argc, char** argv)
     Mat current_frame;
     Mat prev_frame;
     frame.copyTo(prev_frame);
-
-    waitKey(100000);
 
     while (true)
     {
