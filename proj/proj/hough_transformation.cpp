@@ -1,12 +1,10 @@
 #include "hough_transformation.h"
 
-namespace ADAS
+namespace adas
 {
-	// Contaions lines for the source image.
-	vector<Vec4i> hough_transformation::lines;
-
-	void hough_transformation::line_transformation(Mat image, Mat& result)
+	void hough_transformation::apply_line_transformation(Mat image, Mat& result)
 	{
+		vector<Vec4i> lines;
 		HoughLinesP(image, lines, 1, CV_PI / 180, 500, 10, 200);
 
 		for (size_t i = 0; i < lines.size(); i++)
@@ -16,8 +14,10 @@ namespace ADAS
 		}
 	}
 
-	vector<Vec4i> hough_transformation::get_lines()
+	std::vector<cv::Vec4i> hough_transformation::get_lines(cv::Mat image)
 	{
-		return this->lines;
+		vector<Vec4i> lines;
+		HoughLinesP(image, lines, 1, CV_PI / 180, 500, 10, 200);
+		return lines;
 	}
 }

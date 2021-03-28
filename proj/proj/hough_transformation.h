@@ -10,16 +10,16 @@ using namespace cv;
 using namespace std;
 
 //This class contaion Huogh kine transformation.
-namespace ADAS
+namespace adas
 {
 	class hough_transformation
 	{
-	private:
-		static vector<Vec4i> lines;
 	public:
-		void line_transformation(Mat image, Mat& result);
+		// apply hough tramsformation to the image.
+		static void apply_line_transformation(Mat image, Mat& result);
 
-		vector<Vec4i> get_lines();
+		// get lines.
+		static std::vector<cv::Vec4i> get_lines(cv::Mat image);
 	};
 }
 

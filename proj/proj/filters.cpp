@@ -3,7 +3,7 @@
 
 using namespace cv;
 
-namespace ADAS
+namespace adas
 {
     filters::filters(int _low_threashold, int _kernel_size) : low_threshold(_low_threashold), kernel_size(_kernel_size)
     {}

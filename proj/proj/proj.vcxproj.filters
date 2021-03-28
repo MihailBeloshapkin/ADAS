@@ -30,10 +30,13 @@
     <ClCompile Include="line_transfer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="filters.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="process.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="filters.cpp">
+    <ClCompile Include="process_templates.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +53,10 @@
     <ClInclude Include="line_transfer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="process.h">
+    <ClInclude Include="filters.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="filters.h">
+    <ClInclude Include="process.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

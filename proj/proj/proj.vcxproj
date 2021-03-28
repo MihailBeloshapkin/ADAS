@@ -155,6 +155,7 @@
     <ClCompile Include="line_transfer.cpp" />
     <ClCompile Include="optical_flow.cpp" />
     <ClCompile Include="process.cpp" />
+    <ClCompile Include="process_templates.cpp" />
     <ClCompile Include="proj.cpp" />
     <ClCompile Include="watershed_algorithm.cpp" />
   </ItemGroup>

@@ -9,7 +9,7 @@
 using namespace cv;
 using namespace std;
 
-namespace ADAS
+namespace adas
 {
 	// This class contains methods to move lines on the image.
 	class line_transfer

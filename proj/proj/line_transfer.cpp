@@ -1,7 +1,7 @@
 #include <math.h>
 #include "line_transfer.h"
 
-namespace ADAS
+namespace adas
 {
     // Shif line in correct direction.
     void line_transfer::shift_line_down(cv::Vec4i& line)
@@ -36,7 +36,7 @@ namespace ADAS
     {
         vector<Vec4i> result;
 
-        for (int iter = 0; iter < lines.size; iter++)
+        for (int iter = 0; iter < lines.size(); iter++)
         {
             auto current_tan = line_transfer::tan(lines[iter]);
             if (current_tan > abs(tan) && current_tan < -abs(tan))

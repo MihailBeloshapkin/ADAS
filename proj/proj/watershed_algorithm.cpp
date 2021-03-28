@@ -10,16 +10,16 @@
 
 using namespace std;
 
-namespace ADAS
+namespace adas
 {
     
-    void watershed::watershed_alg(Mat frame)
+    void watershed::watershed_alg(Mat frame, Mat&result)
     {
-        Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
+     //   Mat subFrame = frame(cv::Range(frame.rows / 2, frame.rows), cv::Range(0, frame.cols));
         Mat gray;
         Mat bw;
 
-        cvtColor(subFrame, bw, COLOR_BGR2GRAY);
+        cvtColor(frame, bw, COLOR_BGR2GRAY);
         threshold(bw, bw, 40, 255, THRESH_BINARY | THRESH_OTSU);
         Mat dist;
 
@@ -39,9 +39,41 @@ namespace ADAS
 
         Mat markers = Mat::zeros(dist.size(), CV_32S);
 
-        for (size_t i = 0; i < contours.size(); i++)
+        for (int i = 0; i < contours.size(); i++)
         {
-            drawContours(markers, contours, static_cast<int>(i), Scalar(static_cast<int>(i) + 1), -1);
+            drawContours(markers, contours, i, Scalar::all( + 1), -1);
         }
+        circle(markers, cv::Point(5, 5), 3, CV_RGB(255, 255, 255), -1);
+        
+        // Apply watershed.
+        cv::watershed(frame, markers);
+
+        vector<Vec3b> colors;
+
+        for (int iter = 0; iter < contours.size(); iter++)
+        {
+            int b = RNG().uniform(0, 255);
+            int g = RNG().uniform(0, 255);
+            int r = RNG().uniform(0, 255);
+            colors.push_back(Vec3b((unsigned char)b, (unsigned char)g, (unsigned char)r));
+        }
+
+        Mat dst = Mat::zeros(markers.size(), CV_8UC3);
+        for (int iter = 0; iter < markers.rows; iter++)
+        {
+            for (int jiter = 0; jiter < markers.cols; jiter++)
+            {
+                int index = markers.at<int>(iter, jiter);
+                if (index > 0 && index < contours.size())
+                {
+                    dst.at<Vec3b>(iter, jiter) = colors[index - 1];
+                }
+                else
+                {
+                    dst.at<Vec3b>(iter, jiter) = Vec3b(0, 0, 0);
+                }
+            }
+        }
+        imshow("watershed", dst);
     }
 }

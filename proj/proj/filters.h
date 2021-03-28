@@ -8,7 +8,7 @@
 
 using namespace cv;
 
-namespace ADAS
+namespace adas
 {
     //Canny algorithm class.
     class filters

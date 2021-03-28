@@ -9,10 +9,11 @@
 #include "optical_flow.h"
 #include "watershed_algorithm.h"
 #include "line_transfer.h"
+#include "process.h"
 
 using namespace cv;
 using namespace std;
-using namespace ADAS;
+using namespace adas;
 
 Point2f point;
 
@@ -71,7 +72,14 @@ int main(int argc, char** argv)
 
     Mat frame;
     capture >> frame;
-
+    
+    process<Mat> detection(frame);
+    detection.run();
+    waitKey(10000);
+    /*
+    imshow("src", frame);
+    
+ //   watershed::watershed_alg(frame, frame);
     namedWindow("Get_RGB_values");
     
     setMouseCallback("Get_RGB_values", CallBackFunction, nullptr);
@@ -84,11 +92,9 @@ int main(int argc, char** argv)
     
     filters current_filter(1, 3);
     current_filter.binary_filter(frame, frame, 170, 170, 170);
-
-    
-    
+    imshow("Binary filter", frame);
     current_filter.canny_algorithm(frame, frame);
-    
+    imshow("Canny", frame);
 
     vector<Vec4i> lines;
 
@@ -164,6 +170,6 @@ int main(int argc, char** argv)
             break;
         }
     }
-
+    */
     return 1;
 }

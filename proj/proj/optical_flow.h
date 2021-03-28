@@ -9,7 +9,7 @@
 using namespace cv;
 using namespace std;
 
-namespace ADAS
+namespace adas
 {
 	class optical_flow
 	{

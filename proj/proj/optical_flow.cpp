@@ -10,7 +10,7 @@
 using namespace cv;
 using namespace std;
 
-namespace ADAS
+namespace adas
 {
     vector<Point2f> optical_flow::p0;
     vector<Point2f> optical_flow::p1;
