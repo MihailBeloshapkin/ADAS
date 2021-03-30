@@ -37,13 +37,41 @@ namespace adas
             }
         }
     }
+    
+    // Binary filter with gray color space conversion.
+    void filters::binary_filter_gray_scale(Mat frame, Mat& result, unsigned char border_gray)
+    {
+        Mat gray;
+        frame.copyTo(result);
+        cv::cvtColor(frame, gray, COLOR_BGR2GRAY);
+
+        for (int y = 0; y < gray.rows; y++)
+        {
+            for (int x = 0; x < gray.cols; x++)
+            {
+                int value = gray.at<unsigned char>(y, x);
+                if (value > border_gray)
+                {
+                    result.at<Vec3b>(y, x)[0] = 255;
+                    result.at<Vec3b>(y, x)[1] = 255;
+                    result.at<Vec3b>(y, x)[2] = 255;
+                }
+                else
+                {
+                    result.at<Vec3b>(y, x)[0] = 0;
+                    result.at<Vec3b>(y, x)[1] = 0;
+                    result.at<Vec3b>(y, x)[2] = 0;
+                }
+            }
+        }
+    }
 
     // Canny.
-    void filters::canny_algorithm(Mat frame, Mat& detected_edges)
+    void filters::canny_algorithm(cv::Mat frame, cv::Mat& detected_edges)
     {
         Mat gray;
 
-        cvtColor(frame, gray, COLOR_BGR2GRAY);
+        cv::cvtColor(frame, gray, COLOR_BGR2GRAY);
         GaussianBlur(gray, detected_edges, Size(5, 5), 0);
         Canny(detected_edges, detected_edges, low_threshold, low_threshold * 3, kernel_size);
         imshow("canny", detected_edges);

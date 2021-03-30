@@ -25,6 +25,9 @@ namespace adas
 
         // Special binary filter.
         void binary_filter(Mat frame, Mat& result, unsigned char border_r, unsigned char border_g, unsigned char border_b);
+
+        // Binary filter with gray color space conversion.
+        void binary_filter_gray_scale(Mat frame, Mat& result, unsigned char border_gray);
     };
 
 }

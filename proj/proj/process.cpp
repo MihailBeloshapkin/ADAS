@@ -6,7 +6,7 @@ namespace adas
 	void process::run(cv::Mat image)
 	{
 		filters current_filter(1, 3);
-		current_filter.binary_filter(image, image, 170, 170, 170);
+	//	current_filter.binary_filter(image, image, 170, 170, 170);
 		current_filter.canny_algorithm(image, image);
 		vector<Vec4i> lines = hough_transformation::get_lines(image);
 		vector<Vec4i> correct_lines = line_transfer::sort_by_tan(lines, 0.2);

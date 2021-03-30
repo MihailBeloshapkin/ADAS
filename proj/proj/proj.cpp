@@ -17,26 +17,24 @@ using namespace adas;
 
 Point2f point;
 
-optical_flow alg;
-
 int count_of_added_points = 0;
-
-// Speed video_speed;
 
 vector<Mat> splited_hsv = vector<Mat>();
 
 Mat src;
+Mat gray;
+
 
 typedef unsigned char uchar;
 
-void CallBackFunction(int event, int x, int y, int flags, void* userdata)
+// Output value of the BTR format to a console.
+void CallBackFunction1(int event, int x, int y, int flags, void* userdata)
 {
     switch (event)
     {
     case EVENT_LBUTTONDOWN:
         cout << "Left button pressed on position:" << x << " " << y << endl;
         point = Point2f(x, y);
-        alg.add_point(point);
         count_of_added_points++;
         break;
     case EVENT_RBUTTONDOWN:
@@ -61,6 +59,20 @@ void CallBackFunction(int event, int x, int y, int flags, void* userdata)
     }
 }
 
+// Output value in the gray scale to a console.
+void CallBackFunction2(int event, int x, int y, int flags, void* userdata)
+{
+    switch (event)
+    {
+    case EVENT_LBUTTONDOWN:
+        break;
+    case EVENT_RBUTTONDOWN:
+        int value = gray.at<unsigned char>(y, x);
+        cout << "value " << value << endl;
+        break;
+    }
+}
+
 int main(int argc, char** argv)
 {  
     VideoCapture capture("C:\\videos\\example_2.avi");
@@ -70,11 +82,18 @@ int main(int argc, char** argv)
         return 0;
     }
 
+    
+
     Mat frame;
     capture >> frame;
-    
-    process::run(frame);
-    waitKey(10000);
+
+    cv::cvtColor(frame, gray, COLOR_BGR2GRAY);
+
+    namedWindow("Get_GRAY_values");
+
+    setMouseCallback("Get_GRAY_values", CallBackFunction2, nullptr);
+    imshow("Get_GRAY_values", gray);
+    waitKey(100000);
     /*
     imshow("src", frame);
     

@@ -1,6 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(475,5): warning MSB8029: Промежуточный каталог или каталог выхода не может располагаться во временном каталоге, потому что это может стать причиной проблем с добавочной сборкой.
-  process_templates.cpp
-C:\Users\france\source\ADAS\proj\proj\process.cpp(19,1): warning C4305: аргумент: усечение из "double" в "float"
-C:\Users\france\source\ADAS\proj\proj\process.cpp(13): message : во время компиляции функции-члена класс шаблон "void adas::process<cv::Mat>::run(void)"
-C:\Users\france\source\ADAS\proj\proj\process_templates.cpp(5): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "adas::process<cv::Mat>"
+  proj.cpp
+C:\Users\france\source\ADAS\proj\proj\proj.cpp(37,28): warning C4244: аргумент: преобразование "int" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\france\source\ADAS\proj\proj\proj.cpp(37,25): warning C4244: аргумент: преобразование "int" в "_Tp", возможна потеря данных
+          with
+          [
+              _Tp=float
+          ]
   proj.vcxproj -> C:\Users\france\source\ADAS\proj\x64\Debug\proj.exe
