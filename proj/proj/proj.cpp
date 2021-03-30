@@ -73,8 +73,7 @@ int main(int argc, char** argv)
     Mat frame;
     capture >> frame;
     
-    process<Mat> detection(frame);
-    detection.run();
+    process::run(frame);
     waitKey(10000);
     /*
     imshow("src", frame);

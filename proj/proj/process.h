@@ -14,19 +14,19 @@ using namespace cv;
 
 namespace adas
 {
-	template <class T>
 	class process
 	{
 	private:
-		T data;
-		cv::VideoCapture capture;
-		cv::Mat img;
 	public:
-		process(T data);
+		// Apply detection to the image.
+		static void run(cv::Mat image);
 
-		// Start the process
-		
-		void run();
+		// Apply detection to the video.
+		static void run(cv::VideoCapture capture);
+
+
+		// Apply detection to the set of images.
+		static void run(std::vector<cv::Mat> set_of_images);
 	};
 }
 
